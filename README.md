@@ -72,7 +72,7 @@ This project was developed to apply practical knowledge of:
 | Member               | GitHub                                         |
 | -------------------- | ---------------------------------------------- |
 | **Claudio Henrique** | [@rhee-c31](https://github.com/rhee-c31)       |
-| **Gabriel Lopes**    | [@rhee-c31](https://github.com/GalSal0967)     |
+| **Gabriel Lopes**    | [@GalSal0967](https://github.com/GalSal0967)     |
 | **Eduardo Gomes**    | [@Edukaxs](https://github.com/Edukaxs)         |
 
 ## Status
