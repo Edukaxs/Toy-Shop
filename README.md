@@ -55,12 +55,6 @@ Toy-Shop/
 
 > The folder structure may be modified as the project develops.
 
-## Team Members
-
-* **Eduardo Gomes**
-* **Claudio Henrique**
-* **Gabriel Lopes**
-
 ## Academic Objectives
 
 This project was developed to apply practical knowledge of:
@@ -72,6 +66,14 @@ This project was developed to apply practical knowledge of:
 * PHP development
 * Database integration
 * Web development
+
+## Team Members
+
+| Member               | GitHub                                         |
+| -------------------- | ---------------------------------------------- |
+| **Claudio Henrique** | [@rhee-c31](https://github.com/rhee-c31)       |
+| **Gabriel Lopes**    | [@rhee-c31](https://github.com/GalSal0967)     |
+| **Eduardo Gomes**    | [@Edukaxs](https://github.com/Edukaxs)         |
 
 ## Status
 
