@@ -68,12 +68,7 @@ This project was developed to apply practical knowledge of:
 * Web development
 
 ## Team Members
-
-| Member               | GitHub                                         |
-| -------------------- | ---------------------------------------------- |
-| **Claudio Henrique** | [@rhee-c31](https://github.com/rhee-c31)       |
-| **Gabriel Lopes**    | [@GalSal0967](https://github.com/GalSal0967)     |
-| **Eduardo Gomes**    | [@Edukaxs](https://github.com/Edukaxs)         |
+![](./CONTRIBUTOR_MURAL.svg)
 
 ## Status
 
