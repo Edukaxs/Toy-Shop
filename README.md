@@ -10,12 +10,9 @@ The project also aims to put into practice concepts related to **web development
 
 ## Technologies Used
 
-* **PHP** — system development
-* **MySQL/MariaDB** — database
-* **HTML5** — page structure
-* **CSS3** — styling
-* **XAMPP** — local development environment
-* **phpMyAdmin** — database management
+* **Java** — system development
+* **SQL Server** — database
+* **Apache NetBeans** — IDE
 
 ## Database
 
@@ -63,9 +60,7 @@ This project was developed to apply practical knowledge of:
 * DDL and SQL
 * Primary and foreign keys
 * Relationships between tables
-* PHP development
 * Database integration
-* Web development
 
 ## Team Members
 ![](./CONTRIBUTOR_MURAL.svg)
