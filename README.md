@@ -7,6 +7,7 @@
 <p align="center">
   Toy shop management system developed as a school project using Java.
 </p>
+
 ## About the Project
 
 **Toy Shop** is a system designed to help manage a toy store by organizing information about customers, employees, suppliers, categories, products, and sales.
