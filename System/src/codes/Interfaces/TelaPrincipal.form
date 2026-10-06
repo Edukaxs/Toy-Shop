@@ -1092,14 +1092,14 @@
                               </Group>
                               <Component id="frmFun" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace type="unrelated" pref="18" max="32767" attributes="0"/>
+                          <EmptySpace type="unrelated" pref="27" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="btnFunPesquisa" alignment="0" pref="32" max="32767" attributes="0"/>
                               <Component id="pnlFunPesquisa" alignment="0" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="spFun" min="-2" pref="179" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -2700,7 +2700,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="spPro" alignment="0" pref="816" max="32767" attributes="0"/>
+                              <Component id="spPro" alignment="0" pref="817" max="32767" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                       <Component id="pnlProPesquisa" alignment="0" max="32767" attributes="0"/>
@@ -3666,6 +3666,9 @@
                     <Property name="focusPainted" type="boolean" value="false"/>
                     <Property name="iconTextGap" type="int" value="12"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnVenFinalizarActionPerformed"/>
+                  </Events>
                 </Component>
                 <Container class="javax.swing.JPanel" name="pnlVenTotal">
                   <Properties>

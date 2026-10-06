@@ -5,10 +5,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaPrincipal.class.getName());
     private CardLayout cardLayout;
+    int nivelPermissao = 2;
     /**
      * Creates new form TelaPrincipal
      */
     public TelaPrincipal() {
+        super("Loja de Brinquedos - Painel");
         initComponents();
         
         spMenu.getVerticalScrollBar().setUnitIncrement(20);
@@ -959,13 +961,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(btnFunCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(frmFun, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 18, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 27, Short.MAX_VALUE)
                 .addGroup(TelaFuncionariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnFunPesquisa, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
                     .addComponent(pnlFunPesquisa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(spFun, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26))
+                .addGap(17, 17, 17))
         );
 
         TelaFornecedores.setBackground(new java.awt.Color(252, 252, 252));
@@ -1717,7 +1719,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGroup(TelaProdutosLayout.createSequentialGroup()
                 .addGap(49, 49, 49)
                 .addGroup(TelaProdutosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(spPro, javax.swing.GroupLayout.DEFAULT_SIZE, 816, Short.MAX_VALUE)
+                    .addComponent(spPro, javax.swing.GroupLayout.DEFAULT_SIZE, 817, Short.MAX_VALUE)
                     .addGroup(TelaProdutosLayout.createSequentialGroup()
                         .addGroup(TelaProdutosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(pnlProPesquisa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1854,6 +1856,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         btnVenFinalizar.setBorderPainted(false);
         btnVenFinalizar.setFocusPainted(false);
         btnVenFinalizar.setIconTextGap(12);
+        btnVenFinalizar.addActionListener(this::btnVenFinalizarActionPerformed);
 
         pnlVenTotal.setBackground(new java.awt.Color(156, 238, 169));
 
@@ -2237,17 +2240,26 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void btnMenuFuncActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuFuncActionPerformed
         // TODO add your handling code here:
-        cardLayout.show(painelConteudo, "funcionarios");
+        if(nivelPermissao == 2){
+            cardLayout.show(painelConteudo, "funcionarios");
+            setTitle("Loja de Brinquedos - Funcionários");
+        } else {
+            TelaAviso aviso = new TelaAviso("erro");
+            aviso.setLocationRelativeTo(null);
+            aviso.setVisible(true);
+        }
     }//GEN-LAST:event_btnMenuFuncActionPerformed
 
     private void btnMenuClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuClientesActionPerformed
         // TODO add your handling code here:
         cardLayout.show(painelConteudo, "clientes");
+        setTitle("Loja de Brinquedos - Clientes");
     }//GEN-LAST:event_btnMenuClientesActionPerformed
 
     private void btnMenuInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuInicioActionPerformed
         // TODO add your handling code here:
         cardLayout.show(painelConteudo, "inicio");
+        setTitle("Loja de Brinquedos - Início");
     }//GEN-LAST:event_btnMenuInicioActionPerformed
 
     private void btnClSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClSalvarActionPerformed
@@ -2277,11 +2289,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void btnClientesPrincipalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesPrincipalActionPerformed
         // TODO add your handling code here:
         cardLayout.show(painelConteudo, "clientes");
+        setTitle("Loja de Brinquedos - Clientes");
     }//GEN-LAST:event_btnClientesPrincipalActionPerformed
 
     private void btnCategoriasPrincipalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCategoriasPrincipalActionPerformed
         // TODO add your handling code here:
         cardLayout.show(painelConteudo, "categorias");
+        setTitle("Loja de Brinquedos - Categorias");
     }//GEN-LAST:event_btnCategoriasPrincipalActionPerformed
 
     private void btnFunSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFunSalvarActionPerformed
@@ -2315,6 +2329,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void btnFuncionariosPrincipalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFuncionariosPrincipalActionPerformed
         // TODO add your handling code here:
         cardLayout.show(painelConteudo, "funcionarios");
+        setTitle("Loja de Brinquedos - Funcionários");
     }//GEN-LAST:event_btnFuncionariosPrincipalActionPerformed
 
     private void btnForSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnForSalvarActionPerformed
@@ -2348,11 +2363,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void btnFornecedoresPrincipalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFornecedoresPrincipalActionPerformed
         // TODO add your handling code here:
         cardLayout.show(painelConteudo, "fornecedores");
+        setTitle("Loja de Brinquedos - Fornecedores");
     }//GEN-LAST:event_btnFornecedoresPrincipalActionPerformed
 
     private void btnMenuFornActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuFornActionPerformed
         // TODO add your handling code here:
         cardLayout.show(painelConteudo, "fornecedores");
+        setTitle("Loja de Brinquedos - Fornecedores");
     }//GEN-LAST:event_btnMenuFornActionPerformed
 
     private void btnMenuSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuSairActionPerformed
@@ -2411,26 +2428,31 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void btnMenuCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuCategoriasActionPerformed
         // TODO add your handling code here:
         cardLayout.show(painelConteudo, "categorias");
+        setTitle("Loja de Brinquedos - Categorias");
     }//GEN-LAST:event_btnMenuCategoriasActionPerformed
 
     private void btnMenuProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuProdutosActionPerformed
         // TODO add your handling code here:
         cardLayout.show(painelConteudo, "produtos");
+        setTitle("Loja de Brinquedos - Produtos");
     }//GEN-LAST:event_btnMenuProdutosActionPerformed
 
     private void btnProdutosPrincipalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProdutosPrincipalActionPerformed
         // TODO add your handling code here:
         cardLayout.show(painelConteudo, "produtos");
+        setTitle("Loja de Brinquedos - Produtos");
     }//GEN-LAST:event_btnProdutosPrincipalActionPerformed
 
     private void btnVendasPrincipalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVendasPrincipalActionPerformed
         // TODO add your handling code here:
         cardLayout.show(painelConteudo, "vendas");
+        setTitle("Loja de Brinquedos - Vendas");
     }//GEN-LAST:event_btnVendasPrincipalActionPerformed
 
     private void btnMenuVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuVendasActionPerformed
         // TODO add your handling code here:
         cardLayout.show(painelConteudo, "vendas");
+        setTitle("Loja de Brinquedos - Vendas");
     }//GEN-LAST:event_btnMenuVendasActionPerformed
 
     private void txfVenQtdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfVenQtdActionPerformed
@@ -2444,6 +2466,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void cmbProCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbProCategoriaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbProCategoriaActionPerformed
+
+    private void btnVenFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVenFinalizarActionPerformed
+        // TODO add your handling code here:
+        TelaAviso aviso = new TelaAviso("erro");
+        aviso.setLocationRelativeTo(null);
+        aviso.setVisible(true);
+    }//GEN-LAST:event_btnVenFinalizarActionPerformed
 
     /**
      * @param args the command line arguments

@@ -8,6 +8,7 @@ public class TelaLogin extends javax.swing.JFrame {
      * Creates new form TelaLogin
      */
     public TelaLogin() {
+        super("Loja de Brinquedos - Login");
         initComponents();
     }
 
@@ -195,6 +196,9 @@ public class TelaLogin extends javax.swing.JFrame {
 
     private void btnLoginEsqcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginEsqcActionPerformed
         // TODO add your handling code here:
+        TelaAviso aviso = new TelaAviso("erro");
+        aviso.setLocationRelativeTo(null);
+        aviso.setVisible(true);
     }//GEN-LAST:event_btnLoginEsqcActionPerformed
 
     /**
