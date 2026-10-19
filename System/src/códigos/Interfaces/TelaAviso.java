@@ -18,18 +18,26 @@ public class TelaAviso extends javax.swing.JFrame {
     /**
      * Creates new form TelaAviso
      */
-    public TelaAviso(String x) {
+    public TelaAviso(String x, String y, String z) {
         initComponents();
         
         cardLayout = new CardLayout();
-        String tipo = x;
+        String tipo = x, titulo = y, aviso = z;
 
         Aviso.setLayout(cardLayout);
 
         Aviso.removeAll();
+        
         Aviso.add(Erro, "erro");
         Aviso.add(Aprovado, "aprovado");
+        
         cardLayout.show(Aviso, tipo);
+        
+        txtAviso.setText(aviso);
+        txtTitulo.setText(titulo);
+        
+        txtAviso2.setText(aviso);
+        txtTitulo2.setText(titulo);
         
         setDefaultCloseOperation(TelaAviso.DISPOSE_ON_CLOSE);
     }
@@ -46,12 +54,12 @@ public class TelaAviso extends javax.swing.JFrame {
         Aviso = new javax.swing.JPanel();
         Erro = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        txtTitulo = new javax.swing.JLabel();
+        txtAviso = new javax.swing.JLabel();
         Aprovado = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
+        txtTitulo2 = new javax.swing.JLabel();
+        txtAviso2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -62,11 +70,11 @@ public class TelaAviso extends javax.swing.JFrame {
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Aviso.png"))); // NOI18N
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel2.setText("Erro de Permissão");
+        txtTitulo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        txtTitulo.setText("Erro de Permissão");
 
-        jLabel3.setText("Você precisa ser um ADMINISTRADOR para acessar esse módulo. ");
-        jLabel3.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        txtAviso.setText("Você precisa ser um ADMINISTRADOR para acessar esse módulo. ");
+        txtAviso.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         javax.swing.GroupLayout ErroLayout = new javax.swing.GroupLayout(Erro);
         Erro.setLayout(ErroLayout);
@@ -77,8 +85,8 @@ public class TelaAviso extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(23, 23, 23)
                 .addGroup(ErroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3))
+                    .addComponent(txtTitulo)
+                    .addComponent(txtAviso))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         ErroLayout.setVerticalGroup(
@@ -88,9 +96,9 @@ public class TelaAviso extends javax.swing.JFrame {
                 .addGroup(ErroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addGroup(ErroLayout.createSequentialGroup()
-                        .addComponent(jLabel2)
+                        .addComponent(txtTitulo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel3)))
+                        .addComponent(txtAviso)))
                 .addGap(35, 35, 35))
         );
 
@@ -99,11 +107,11 @@ public class TelaAviso extends javax.swing.JFrame {
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Aprovado.png"))); // NOI18N
 
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel8.setText("Venda Aprovada");
+        txtTitulo2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        txtTitulo2.setText("Venda Aprovada");
 
-        jLabel9.setText("Sua venda foi realizada com sucesso, no valor de R$189,72");
-        jLabel9.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        txtAviso2.setText("Sua venda foi realizada com sucesso, no valor de R$189,72");
+        txtAviso2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         javax.swing.GroupLayout AprovadoLayout = new javax.swing.GroupLayout(Aprovado);
         Aprovado.setLayout(AprovadoLayout);
@@ -114,8 +122,8 @@ public class TelaAviso extends javax.swing.JFrame {
                 .addComponent(jLabel7)
                 .addGap(23, 23, 23)
                 .addGroup(AprovadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel8)
-                    .addComponent(jLabel9))
+                    .addComponent(txtTitulo2)
+                    .addComponent(txtAviso2))
                 .addContainerGap(46, Short.MAX_VALUE))
         );
         AprovadoLayout.setVerticalGroup(
@@ -125,9 +133,9 @@ public class TelaAviso extends javax.swing.JFrame {
                 .addGroup(AprovadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7)
                     .addGroup(AprovadoLayout.createSequentialGroup()
-                        .addComponent(jLabel8)
+                        .addComponent(txtTitulo2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel9)))
+                        .addComponent(txtAviso2)))
                 .addGap(35, 35, 35))
         );
 
@@ -137,12 +145,12 @@ public class TelaAviso extends javax.swing.JFrame {
             AvisoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(AvisoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(Erro, javax.swing.GroupLayout.DEFAULT_SIZE, 458, Short.MAX_VALUE)
+                .addComponent(Erro, javax.swing.GroupLayout.DEFAULT_SIZE, 462, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(AvisoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AvisoLayout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(Aprovado, javax.swing.GroupLayout.DEFAULT_SIZE, 458, Short.MAX_VALUE)
+                    .addComponent(Aprovado, javax.swing.GroupLayout.DEFAULT_SIZE, 462, Short.MAX_VALUE)
                     .addContainerGap()))
         );
         AvisoLayout.setVerticalGroup(
@@ -188,10 +196,10 @@ public class TelaAviso extends javax.swing.JFrame {
     private javax.swing.JPanel Aviso;
     private javax.swing.JPanel Erro;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel txtAviso;
+    private javax.swing.JLabel txtAviso2;
+    private javax.swing.JLabel txtTitulo;
+    private javax.swing.JLabel txtTitulo2;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,17 +1,32 @@
 package códigos.Interfaces;
 import java.awt.CardLayout;
+import conexao.Conexao;
+import java.awt.Color;
+import javax.swing.table.DefaultTableModel;
+import java.sql.*;
+import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.border.EmptyBorder;
 
 public class TelaPrincipal extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaPrincipal.class.getName());
     private CardLayout cardLayout;
     int nivelPermissao = 2;
+    private Conexao con_cliente;
+    
     /**
      * Creates new form TelaPrincipal
      */
-    public TelaPrincipal() {
+    public TelaPrincipal(Conexao conexao) {
         super("Loja de Brinquedos - Painel");
         initComponents();
+        this.con_cliente = conexao;
+        
+        preencherTodasTabelas();
+        for (javax.swing.JTable t : new javax.swing.JTable[]{tabCl, tabFun, tabFor, tabCat, tabPro, tabVen}) {
+            centralizarTabela(t);
+        }
         
         spMenu.getVerticalScrollBar().setUnitIncrement(20);
 
@@ -224,7 +239,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         btnMenuCategorias = new javax.swing.JButton();
         btnMenuProdutos = new javax.swing.JButton();
         btnMenuVendas = new javax.swing.JButton();
-        btnMenuRelatorios = new javax.swing.JButton();
         btnMenuSair = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -487,7 +501,18 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         icnClLupa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Pesquisa.png"))); // NOI18N
 
+        txfClPesquisa.setForeground(new java.awt.Color(192, 192, 192));
+        txfClPesquisa.setText("Pesquisar por nome ou CPF...");
+        txfClPesquisa.setToolTipText("");
         txfClPesquisa.setBorder(null);
+        txfClPesquisa.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txfClPesquisaFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txfClPesquisaFocusLost(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlClPesquisaLayout = new javax.swing.GroupLayout(pnlClPesquisa);
         pnlClPesquisa.setLayout(pnlClPesquisaLayout);
@@ -619,7 +644,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         spCl.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
         tabCl.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(216, 228, 235), 1, true));
-        tabCl.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
+        tabCl.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        tabCl.setForeground(new java.awt.Color(73, 73, 73));
         tabCl.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
@@ -659,7 +685,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                             .addComponent(btnClSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnClEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnClPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(84, Short.MAX_VALUE))
+                .addContainerGap(85, Short.MAX_VALUE))
         );
         TelaClientesLayout.setVerticalGroup(
             TelaClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -768,7 +794,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         icnFunPesquisa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Pesquisa.png"))); // NOI18N
 
+        txfFunPesquisa.setForeground(new java.awt.Color(192, 192, 192));
+        txfFunPesquisa.setText("Pesquisar por nome ou cargo...");
         txfFunPesquisa.setBorder(null);
+        txfFunPesquisa.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txfFunPesquisaFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txfFunPesquisaFocusLost(evt);
+            }
+        });
         txfFunPesquisa.addActionListener(this::txfFunPesquisaActionPerformed);
 
         javax.swing.GroupLayout pnlFunPesquisaLayout = new javax.swing.GroupLayout(pnlFunPesquisa);
@@ -900,7 +936,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         spFun.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
         tabFun.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(216, 228, 235), 1, true));
-        tabFun.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
+        tabFun.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        tabFun.setForeground(new java.awt.Color(73, 73, 73));
         tabFun.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
@@ -944,7 +981,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                             .addComponent(btnFunSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnFunEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnFunPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(83, Short.MAX_VALUE))
         );
         TelaFuncionariosLayout.setVerticalGroup(
             TelaFuncionariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -961,13 +998,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(btnFunCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(frmFun, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 27, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(TelaFuncionariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnFunPesquisa, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
                     .addComponent(pnlFunPesquisa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(spFun, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(17, 17, 17))
+                .addGap(26, 26, 26))
         );
 
         TelaFornecedores.setBackground(new java.awt.Color(252, 252, 252));
@@ -1052,7 +1089,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         icnForPesquisa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Pesquisa.png"))); // NOI18N
 
+        txfForPesquisa.setForeground(new java.awt.Color(192, 192, 192));
+        txfForPesquisa.setText("Pesquisar por nome ou CNPJ...");
         txfForPesquisa.setBorder(null);
+        txfForPesquisa.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txfForPesquisaFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txfForPesquisaFocusLost(evt);
+            }
+        });
         txfForPesquisa.addActionListener(this::txfForPesquisaActionPerformed);
 
         javax.swing.GroupLayout pnlForPesquisaLayout = new javax.swing.GroupLayout(pnlForPesquisa);
@@ -1170,7 +1217,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         spFor.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
         tabFor.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(216, 228, 235), 1, true));
-        tabFor.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
+        tabFor.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        tabFor.setForeground(new java.awt.Color(73, 73, 73));
         tabFor.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
@@ -1210,7 +1258,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                             .addComponent(btnForSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnForEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnForPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(82, Short.MAX_VALUE))
+                .addContainerGap(83, Short.MAX_VALUE))
         );
         TelaFornecedoresLayout.setVerticalGroup(
             TelaFornecedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1318,7 +1366,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         icnCatPesquisa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Pesquisa.png"))); // NOI18N
 
+        txfCatPesquisa.setForeground(new java.awt.Color(192, 192, 192));
+        txfCatPesquisa.setText("Pesquisar por nome...");
         txfCatPesquisa.setBorder(null);
+        txfCatPesquisa.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txfCatPesquisaFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txfCatPesquisaFocusLost(evt);
+            }
+        });
         txfCatPesquisa.addActionListener(this::txfCatPesquisaActionPerformed);
 
         javax.swing.GroupLayout pnlCatPesquisaLayout = new javax.swing.GroupLayout(pnlCatPesquisa);
@@ -1412,7 +1470,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         spCat.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
         tabCat.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(216, 228, 235), 1, true));
-        tabCat.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
+        tabCat.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        tabCat.setForeground(new java.awt.Color(73, 73, 73));
         tabCat.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
@@ -1452,7 +1511,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                             .addComponent(btnCatSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnCatEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnCatPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(84, Short.MAX_VALUE))
+                .addContainerGap(85, Short.MAX_VALUE))
         );
         TelaCategoriasLayout.setVerticalGroup(
             TelaCategoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1560,7 +1619,18 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         icnProPesquisa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Pesquisa.png"))); // NOI18N
 
+        txfProPesquisa.setForeground(new java.awt.Color(192, 192, 192));
+        txfProPesquisa.setText("Pesquisar por nome ou categoria...");
         txfProPesquisa.setBorder(null);
+        txfProPesquisa.setMargin(new java.awt.Insets(2, 120, 2, 6));
+        txfProPesquisa.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txfProPesquisaFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txfProPesquisaFocusLost(evt);
+            }
+        });
         txfProPesquisa.addActionListener(this::txfProPesquisaActionPerformed);
 
         javax.swing.GroupLayout pnlProPesquisaLayout = new javax.swing.GroupLayout(pnlProPesquisa);
@@ -1691,7 +1761,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         spPro.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
         tabPro.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(216, 228, 235), 1, true));
-        tabPro.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
+        tabPro.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        tabPro.setForeground(new java.awt.Color(73, 73, 73));
         tabPro.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
@@ -1799,7 +1870,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         spVen.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
         tabVen.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(216, 228, 235), 1, true));
-        tabVen.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
+        tabVen.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        tabVen.setForeground(new java.awt.Color(73, 73, 73));
         tabVen.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -2126,16 +2198,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         btnMenuVendas.setIconTextGap(12);
         btnMenuVendas.addActionListener(this::btnMenuVendasActionPerformed);
 
-        btnMenuRelatorios.setBackground(new java.awt.Color(229, 127, 14));
-        btnMenuRelatorios.setFont(new java.awt.Font("Calibri", 1, 22)); // NOI18N
-        btnMenuRelatorios.setForeground(new java.awt.Color(255, 255, 255));
-        btnMenuRelatorios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Relatórios.png"))); // NOI18N
-        btnMenuRelatorios.setText("Relatórios");
-        btnMenuRelatorios.setBorder(null);
-        btnMenuRelatorios.setFocusPainted(false);
-        btnMenuRelatorios.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        btnMenuRelatorios.setIconTextGap(12);
-
         btnMenuSair.setBackground(new java.awt.Color(229, 127, 14));
         btnMenuSair.setFont(new java.awt.Font("Calibri", 1, 22)); // NOI18N
         btnMenuSair.setForeground(new java.awt.Color(255, 255, 255));
@@ -2158,7 +2220,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addComponent(btnMenuCategorias, javax.swing.GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE)
             .addComponent(btnMenuProdutos, javax.swing.GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE)
             .addComponent(btnMenuVendas, javax.swing.GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE)
-            .addComponent(btnMenuRelatorios, javax.swing.GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE)
             .addComponent(btnMenuSair, javax.swing.GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE)
         );
         pnlMenuLayout.setVerticalGroup(
@@ -2178,10 +2239,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(btnMenuVendas, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnMenuRelatorios, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addComponent(btnMenuSair, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 1151, Short.MAX_VALUE))
+                .addGap(0, 1220, Short.MAX_VALUE))
         );
 
         spMenu.setViewportView(pnlMenu);
@@ -2244,7 +2303,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             cardLayout.show(painelConteudo, "funcionarios");
             setTitle("Loja de Brinquedos - Funcionários");
         } else {
-            TelaAviso aviso = new TelaAviso("erro");
+            TelaAviso aviso = new TelaAviso("erro", "Erro de permissão", "Você precisa ser um ADMNISTRADOR para acessar esse painel.");
             aviso.setLocationRelativeTo(null);
             aviso.setVisible(true);
         }
@@ -2372,11 +2431,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         setTitle("Loja de Brinquedos - Fornecedores");
     }//GEN-LAST:event_btnMenuFornActionPerformed
 
-    private void btnMenuSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuSairActionPerformed
-        // TODO add your handling code here:
-        System.exit(0);
-    }//GEN-LAST:event_btnMenuSairActionPerformed
-
     private void btnCatSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCatSalvarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCatSalvarActionPerformed
@@ -2469,35 +2523,173 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void btnVenFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVenFinalizarActionPerformed
         // TODO add your handling code here:
-        TelaAviso aviso = new TelaAviso("erro");
+        TelaAviso aviso = new TelaAviso("aprovado", "Venda aprovada!", "Venda realizada com sucesso no valor de: R$189,70");
         aviso.setLocationRelativeTo(null);
         aviso.setVisible(true);
     }//GEN-LAST:event_btnVenFinalizarActionPerformed
 
+    private void btnMenuSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuSairActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_btnMenuSairActionPerformed
+
+    private void txfProPesquisaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txfProPesquisaFocusGained
+        // TODO add your handling code here:
+        if(txfProPesquisa.getText().equals("Pesquisar por nome ou categoria...")){
+            txfProPesquisa.setText("");
+            txfProPesquisa.setForeground(new Color(0, 0, 0));
+        }
+    }//GEN-LAST:event_txfProPesquisaFocusGained
+
+    private void txfProPesquisaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txfProPesquisaFocusLost
+        // TODO add your handling code here:
+        if(txfProPesquisa.getText().equals("")){
+            txfProPesquisa.setText("Pesquisar por nome ou categoria...");
+            txfProPesquisa.setForeground(new Color(192,192,192));
+        }
+    }//GEN-LAST:event_txfProPesquisaFocusLost
+
+    private void txfForPesquisaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txfForPesquisaFocusGained
+        // TODO add your handling code here:
+        if(txfForPesquisa.getText().equals("Pesquisar por nome ou CNPJ...")){
+            txfForPesquisa.setText("");
+            txfForPesquisa.setForeground(new Color(0, 0, 0));
+        }
+    }//GEN-LAST:event_txfForPesquisaFocusGained
+
+    private void txfForPesquisaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txfForPesquisaFocusLost
+        // TODO add your handling code here:
+        if(txfForPesquisa.getText().equals("")){
+            txfForPesquisa.setText("Pesquisar por nome ou CNPJ...");
+            txfForPesquisa.setForeground(new Color(192,192,192));
+        }
+    }//GEN-LAST:event_txfForPesquisaFocusLost
+
+    private void txfFunPesquisaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txfFunPesquisaFocusGained
+        // TODO add your handling code here:
+        if(txfFunPesquisa.getText().equals("Pesquisar por nome ou cargo...")){
+            txfFunPesquisa.setText("");
+            txfFunPesquisa.setForeground(new Color(0, 0, 0));
+        }
+    }//GEN-LAST:event_txfFunPesquisaFocusGained
+
+    private void txfFunPesquisaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txfFunPesquisaFocusLost
+        // TODO add your handling code here:
+        if(txfFunPesquisa.getText().equals("")){
+            txfFunPesquisa.setText("Pesquisar por nome ou cargo...");
+            txfFunPesquisa.setForeground(new Color(192,192,192));
+        }
+    }//GEN-LAST:event_txfFunPesquisaFocusLost
+
+    private void txfClPesquisaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txfClPesquisaFocusGained
+        // TODO add your handling code here:
+        if(txfClPesquisa.getText().equals("Pesquisar por nome ou CPF...")){
+            txfClPesquisa.setText("");
+            txfClPesquisa.setForeground(new Color(0, 0, 0));
+        }
+    }//GEN-LAST:event_txfClPesquisaFocusGained
+
+    private void txfClPesquisaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txfClPesquisaFocusLost
+        // TODO add your handling code here:
+        if(txfClPesquisa.getText().equals("")){
+            txfClPesquisa.setText("Pesquisar por nome ou CPF...");
+            txfClPesquisa.setForeground(new Color(192,192,192));
+        }
+    }//GEN-LAST:event_txfClPesquisaFocusLost
+
+    private void txfCatPesquisaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txfCatPesquisaFocusGained
+        // TODO add your handling code here:
+        if(txfCatPesquisa.getText().equals("Pesquisar por nome...")){
+            txfCatPesquisa.setText("");
+            txfCatPesquisa.setForeground(new Color(0, 0, 0));
+        }
+    }//GEN-LAST:event_txfCatPesquisaFocusGained
+
+    private void txfCatPesquisaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txfCatPesquisaFocusLost
+        // TODO add your handling code here:
+        if(txfCatPesquisa.getText().equals("")){
+            txfCatPesquisa.setText("Pesquisar por nome...");
+            txfCatPesquisa.setForeground(new Color(192,192,192));
+        }
+    }//GEN-LAST:event_txfCatPesquisaFocusLost
+
+    private void preencherTabela(javax.swing.JTable tabela, String sql) {
+        DefaultTableModel modelo = (DefaultTableModel) tabela.getModel();
+        modelo.setNumRows(0);
+
+        try {
+            con_cliente.executaSQL(sql);               // roda a consulta desta tabela
+            int colunas = modelo.getColumnCount();     // quantas colunas a JTable tem
+
+            con_cliente.resultset.beforeFirst();
+            while (con_cliente.resultset.next()) {
+                Object[] linha = new Object[colunas];
+                for (int i = 0; i < colunas; i++) {
+                    linha[i] = con_cliente.resultset.getString(i + 1);
+                }
+                modelo.addRow(linha);
+            }
+        } catch (SQLException erro) {
+            TelaAviso aviso = new TelaAviso("erro", "Erro SQL",
+                    "Não foi possível preencher a tabela.");
+            aviso.setLocationRelativeTo(null);
+            aviso.setVisible(true);
+        }
+    }
+    
+    public void preencherTodasTabelas() {
+
+    // Clientes: ID, Nome, CPF, Telefone, E-mail, Endereço
+    preencherTabela(tabCl,
+        "SELECT idCliente, Nome, CPF, Telefone, Email, Endereco "
+      + "FROM dbo.cliente ORDER BY idCliente");
+
+    // Funcionários: ID, Nome, Cargo, Login, Senha, Nível
+    preencherTabela(tabFun,
+        "SELECT idFuncionario, Nome, Cargo, Login, Senha, nivelPermissao "
+      + "FROM dbo.funcionario ORDER BY idFuncionario");
+
+    // Fornecedores: ID, Nome, CNPJ, Telefone, Email
+    preencherTabela(tabFor,
+        "SELECT idFornecedor, Nome, CNPJ, Telefone, Email "
+      + "FROM dbo.fornecedor ORDER BY idFornecedor");
+
+    // Categorias: ID, Nome, Descrição
+    preencherTabela(tabCat,
+        "SELECT idCategoria, Nome, Descricao "
+      + "FROM dbo.categoria ORDER BY idCategoria");
+
+    // Produtos: ID, Nome, Preço, Estoque, Fornecedor, Categoria
+    preencherTabela(tabPro,
+        "SELECT p.idProduto, p.Nome, p.Preco, p.quantidadeEstoque, f.Nome, c.Nome "
+      + "FROM dbo.produto p "
+      + "INNER JOIN dbo.fornecedor f ON f.idFornecedor = p.idFornecedor "
+      + "INNER JOIN dbo.categoria c ON c.idCategoria = p.idCategoria "
+      + "ORDER BY p.idProduto");
+
+    // Vendas: Produto, Qtd., Preço Unit., Subtotal
+    preencherTabela(tabVen,
+        "SELECT p.Nome, iv.Quantidade, iv.precoUnitario, "
+      + "iv.Quantidade * iv.precoUnitario AS Subtotal "
+      + "FROM dbo.item_venda iv "
+      + "INNER JOIN dbo.produto p ON p.idProduto = iv.idProduto "
+      + "ORDER BY iv.idVenda, iv.idItemVenda");
+}
+    
+    private void centralizarTabela(javax.swing.JTable tabela) {
+        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+        renderer.setHorizontalAlignment(SwingConstants.LEFT);
+        renderer.setVerticalAlignment(SwingConstants.CENTER);
+        renderer.setBorder(new EmptyBorder(0, 10, 0, 0));
+
+        for (int i = 0; i < tabela.getColumnCount(); i++) {
+            tabela.getColumnModel().getColumn(i).setCellRenderer(renderer);
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new TelaPrincipal().setVisible(true));
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Menu;
@@ -2539,7 +2731,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnMenuFunc;
     private javax.swing.JButton btnMenuInicio;
     private javax.swing.JButton btnMenuProdutos;
-    private javax.swing.JButton btnMenuRelatorios;
     private javax.swing.JButton btnMenuSair;
     private javax.swing.JButton btnMenuVendas;
     private javax.swing.JButton btnProCancelar;

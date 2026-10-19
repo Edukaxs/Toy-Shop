@@ -1,15 +1,21 @@
 package códigos.Interfaces;
 
+import conexao.Conexao;
+
 public class TelaLogin extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaLogin.class.getName());
-
+    Conexao con_cliente;
+    
     /**
      * Creates new form TelaLogin
      */
     public TelaLogin() {
         super("Loja de Brinquedos - Login");
         initComponents();
+        con_cliente = new Conexao();
+        con_cliente.conecta();
+        con_cliente.executaSQL("select * from dbo.cliente order by idCliente");
     }
 
     /**
@@ -57,7 +63,9 @@ public class TelaLogin extends javax.swing.JFrame {
         txtLoginEmail.setFont(new java.awt.Font("Microsoft JhengHei", 0, 18)); // NOI18N
         txtLoginEmail.setText("Email");
 
-        txfLoginEmail.setToolTipText("Digite seu email.");
+        txfLoginEmail.setForeground(new java.awt.Color(192, 192, 192));
+        txfLoginEmail.setText("Insira seu email.");
+        txfLoginEmail.setToolTipText("");
         txfLoginEmail.setMargin(new java.awt.Insets(2, 12, 2, 6));
         txfLoginEmail.addActionListener(this::txfLoginEmailActionPerformed);
 
@@ -96,6 +104,7 @@ public class TelaLogin extends javax.swing.JFrame {
         txtLoginSubtit.setText("Entre em sua conta para acessar os demais recursos da ferramenta.");
 
         txfLoginSenha.setMargin(new java.awt.Insets(2, 12, 2, 6));
+        txfLoginSenha.addActionListener(this::txfLoginSenhaActionPerformed);
 
         javax.swing.GroupLayout pnlLoginFORMLayout = new javax.swing.GroupLayout(pnlLoginFORM);
         pnlLoginFORM.setLayout(pnlLoginFORMLayout);
@@ -187,7 +196,7 @@ public class TelaLogin extends javax.swing.JFrame {
 
     private void btnLoginEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginEntrarActionPerformed
         // TODO add your handling code here:
-        TelaPrincipal principal = new TelaPrincipal();
+        TelaPrincipal principal = new TelaPrincipal(con_cliente);
         principal.setLocationRelativeTo(null);
         principal.setVisible(true);
 
@@ -196,10 +205,14 @@ public class TelaLogin extends javax.swing.JFrame {
 
     private void btnLoginEsqcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginEsqcActionPerformed
         // TODO add your handling code here:
-        TelaAviso aviso = new TelaAviso("erro");
+        TelaAviso aviso = new TelaAviso("erro", "Conexão estabelecida", "Banco de dados conectado com sucesso.");
         aviso.setLocationRelativeTo(null);
         aviso.setVisible(true);
     }//GEN-LAST:event_btnLoginEsqcActionPerformed
+
+    private void txfLoginSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfLoginSenhaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txfLoginSenhaActionPerformed
 
     /**
      * @param args the command line arguments
