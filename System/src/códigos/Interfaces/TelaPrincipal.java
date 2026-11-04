@@ -2523,7 +2523,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void btnVenFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVenFinalizarActionPerformed
         // TODO add your handling code here:
-        TelaAviso aviso = new TelaAviso("aprovado", "Venda aprovada!", "Venda realizada com sucesso no valor de: R$189,70");
+        TelaAviso aviso = new TelaAviso("aprovado", "receba", "receba");
         aviso.setLocationRelativeTo(null);
         aviso.setVisible(true);
     }//GEN-LAST:event_btnVenFinalizarActionPerformed

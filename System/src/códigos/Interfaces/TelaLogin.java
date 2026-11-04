@@ -15,7 +15,6 @@ public class TelaLogin extends javax.swing.JFrame {
         initComponents();
         con_cliente = new Conexao();
         con_cliente.conecta();
-        con_cliente.executaSQL("select * from dbo.cliente order by idCliente");
     }
 
     /**
@@ -64,7 +63,6 @@ public class TelaLogin extends javax.swing.JFrame {
         txtLoginEmail.setText("Email");
 
         txfLoginEmail.setForeground(new java.awt.Color(192, 192, 192));
-        txfLoginEmail.setText("Insira seu email.");
         txfLoginEmail.setToolTipText("");
         txfLoginEmail.setMargin(new java.awt.Insets(2, 12, 2, 6));
         txfLoginEmail.addActionListener(this::txfLoginEmailActionPerformed);
@@ -205,7 +203,7 @@ public class TelaLogin extends javax.swing.JFrame {
 
     private void btnLoginEsqcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginEsqcActionPerformed
         // TODO add your handling code here:
-        TelaAviso aviso = new TelaAviso("erro", "Conexão estabelecida", "Banco de dados conectado com sucesso.");
+        TelaAviso aviso = new TelaAviso("erro", "Função em desenvolvimento", "Se vira ai paizão");
         aviso.setLocationRelativeTo(null);
         aviso.setVisible(true);
     }//GEN-LAST:event_btnLoginEsqcActionPerformed
@@ -213,31 +211,6 @@ public class TelaLogin extends javax.swing.JFrame {
     private void txfLoginSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfLoginSenhaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txfLoginSenhaActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new TelaLogin().setVisible(true));
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel TelaLogin;
