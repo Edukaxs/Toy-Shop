@@ -11,7 +11,7 @@ public class Conexao {
         "com.microsoft.sqlserver.jdbc.SQLServerDriver";
 
     private final String url =
-        "jdbc:sqlserver://localhost:1433;databaseName=LojaDeBrinquedos;integratedSecurity=true;encrypt=true;trustServerCertificate=true";
+    "jdbc:sqlserver://localhost:1433;databaseName=LojaDeBrinquedos;integratedSecurity=true;encrypt=true;trustServerCertificate=true";
 
     private final String usuario = "";
     private final String senha = "";

@@ -2334,7 +2334,22 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnClExcluirActionPerformed
 
     private void btnClCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClCancelarActionPerformed
-        // TODO add your handling code here:
+        JTextField[] campos = {
+            txfClCPF,
+            txfClEmail,
+            txfClEndereco,
+            txfClID,
+            txfClNome,
+            txfClTelefone
+        };
+        
+        txfClPesquisa.setText("Pesquisar por nome ou CPF...");
+        txfClPesquisa.setText("Pesquisar por nome ou CPF...");
+        txfClPesquisa.setForeground(new Color(192,192,192));
+        
+        for (JTextField campo : campos) {
+            campo.setText("");
+        }
     }//GEN-LAST:event_btnClCancelarActionPerformed
 
     private void txfClEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfClEmailActionPerformed
@@ -2370,7 +2385,22 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnFunExcluirActionPerformed
 
     private void btnFunCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFunCancelarActionPerformed
-        // TODO add your handling code here:
+        JTextField[] campos = {
+            txfFunCargo,
+            txfFunID,
+            txfFunLogin,
+            txfFunNivel,
+            txfFunNome,
+            txfFunSenha
+        };
+        
+        txfFunPesquisa.setText("Pesquisar por nome ou cargo...");
+        txfFunPesquisa.setText("Pesquisar por nome ou cargo...");
+        txfFunPesquisa.setForeground(new Color(192,192,192));
+        
+        for (JTextField campo : campos) {
+            campo.setText("");
+        }
     }//GEN-LAST:event_btnFunCancelarActionPerformed
 
     private void txfFunSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfFunSenhaActionPerformed
@@ -2404,7 +2434,21 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnForExcluirActionPerformed
 
     private void btnForCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnForCancelarActionPerformed
-        // TODO add your handling code here:
+        JTextField[] campos = {
+            txfForCNPJ,
+            txfForEmail,
+            txfForID,
+            txfForNome,
+            txfForTelefone
+        };
+        
+        txfForPesquisa.setText("Pesquisar por nome ou CNPJ...");
+        txfForPesquisa.setText("Pesquisar por nome ou CNPJ...");
+        txfForPesquisa.setForeground(new Color(192,192,192));
+        
+        for (JTextField campo : campos) {
+            campo.setText("");
+        }
     }//GEN-LAST:event_btnForCancelarActionPerformed
 
     private void txfForPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfForPesquisaActionPerformed
@@ -2444,7 +2488,19 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCatExcluirActionPerformed
 
     private void btnCatCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCatCancelarActionPerformed
-        // TODO add your handling code here:
+        JTextField[] campos = {
+            txfCatNome,
+            txfCatID
+        };
+        
+        txfCatPesquisa.setText("Pesquisar por nome...");
+        txfCatPesquisa.setText("Pesquisar por nome...");
+        txfCatPesquisa.setForeground(new Color(192,192,192));
+        taCat.setText("");
+        
+        for (JTextField campo : campos) {
+            campo.setText("");
+        }
     }//GEN-LAST:event_btnCatCancelarActionPerformed
 
     private void txfCatPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfCatPesquisaActionPerformed
@@ -2468,7 +2524,23 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnProExcluirActionPerformed
 
     private void btnProCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProCancelarActionPerformed
-        // TODO add your handling code here:
+        JTextField[] campos = {
+            txfProEstoque,
+            txfProID,
+            txfProNome,
+            txfProPreco
+        };
+        
+        txfProPesquisa.setText("Pesquisar por nome ou categoria");
+        txfProPesquisa.setText("Pesquisar por nome ou categoria...");
+        txfProPesquisa.setForeground(new Color(192,192,192));
+        
+        cmbProCategoria.setSelectedIndex(0);
+        cmbProFornecedor.setSelectedIndex(0);
+        
+        for (JTextField campo : campos) {
+            campo.setText("");
+        }
     }//GEN-LAST:event_btnProCancelarActionPerformed
 
     private void txfProPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfProPesquisaActionPerformed
@@ -2618,8 +2690,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         modelo.setNumRows(0);
 
         try {
-            con_cliente.executaSQL(sql);               // roda a consulta desta tabela
-            int colunas = modelo.getColumnCount();     // quantas colunas a JTable tem
+            con_cliente.executaSQL(sql);  // roda a consulta desta tabela
+            int colunas = modelo.getColumnCount();  // quantas colunas a JTable tem
 
             con_cliente.resultset.beforeFirst();
             while (con_cliente.resultset.next()) {

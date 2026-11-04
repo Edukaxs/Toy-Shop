@@ -203,7 +203,7 @@ public class TelaLogin extends javax.swing.JFrame {
 
     private void btnLoginEsqcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginEsqcActionPerformed
         // TODO add your handling code here:
-        TelaAviso aviso = new TelaAviso("erro", "Função em desenvolvimento", "Se vira ai paizão");
+        TelaAviso aviso = new TelaAviso("erro", "Função em desenvolvimento", "Perdeu a senha? So lamentos.");
         aviso.setLocationRelativeTo(null);
         aviso.setVisible(true);
     }//GEN-LAST:event_btnLoginEsqcActionPerformed
