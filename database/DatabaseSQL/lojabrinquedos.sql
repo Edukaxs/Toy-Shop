@@ -1,249 +1,95 @@
--- phpMyAdmin SQL Dump
--- version 5.2.1
--- https://www.phpmyadmin.net/
---
--- Host: 127.0.0.1
--- Tempo de geração: 17/09/2026 às 04:13
--- Versão do servidor: 10.4.32-MariaDB
--- Versão do PHP: 8.2.12
+-- =============================================
+-- Banco de dados: lojabrinquedos
+-- =============================================
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
+IF DB_ID(N'LojaDeBrinquedos') IS NULL
+    CREATE DATABASE LojaDeBrinquedos;
+GO
 
+USE LojaDeBrinquedos;
+GO
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+CREATE TABLE categoria (
+    idCategoria INT IDENTITY(1,1) NOT NULL,      -- Chave Primaria
+    Nome        NVARCHAR(120) NOT NULL,
+    Descricao   NVARCHAR(200) NOT NULL,
+    CONSTRAINT PK_categoria PRIMARY KEY (idCategoria)
+);
+GO
 
---
--- Banco de dados: `lojabrinquedos`
---
+CREATE TABLE cliente (
+    idCliente INT IDENTITY(1,1) NOT NULL,        -- Chave Primaria
+    Nome      NVARCHAR(120) NOT NULL,
+    CPF       VARCHAR(11)   NOT NULL,
+    Telefone  VARCHAR(20)   NOT NULL,
+    Email     NVARCHAR(120) NOT NULL,
+    Endereco  NVARCHAR(200) NOT NULL,
+    CONSTRAINT PK_cliente PRIMARY KEY (idCliente)
+);
+GO
 
--- --------------------------------------------------------
+CREATE TABLE fornecedor (
+    idFornecedor INT IDENTITY(1,1) NOT NULL,     -- Chave Primaria
+    Nome         NVARCHAR(120) NOT NULL,
+    CNPJ         VARCHAR(14)   NOT NULL,
+    Telefone     VARCHAR(20)   NOT NULL,
+    Email        NVARCHAR(120) NOT NULL,
+    CONSTRAINT PK_fornecedor PRIMARY KEY (idFornecedor)
+);
+GO
 
---
--- Estrutura para tabela `categoria`
---
+CREATE TABLE funcionario (
+    idFuncionario  INT IDENTITY(1,1) NOT NULL,   -- Chave Primaria
+    Nome           NVARCHAR(120) NOT NULL,
+    Cargo          NVARCHAR(60)  NOT NULL,
+    Login          VARCHAR(60)   NOT NULL,
+    Senha          VARCHAR(255)  NOT NULL,
+    nivelPermissao INT           NOT NULL,
+    CONSTRAINT PK_funcionario PRIMARY KEY (idFuncionario)
+);
+GO
 
-CREATE TABLE `categoria` (
-  `idCategoria` int(11) NOT NULL COMMENT 'Chave Primaria**',
-  `Nome` varchar(120) NOT NULL,
-  `Descricao` varchar(200) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE produto (
+    idProduto         INT IDENTITY(1,1) NOT NULL, -- Chave Primaria
+    Nome              NVARCHAR(120) NOT NULL,
+    Preco             DECIMAL(10,2) NOT NULL,
+    quantidadeEstoque INT           NOT NULL,
+    idFornecedor      INT           NOT NULL,     -- FK de Fornecedor
+    idCategoria       INT           NOT NULL,     -- FK de Categoria
+    CONSTRAINT PK_produto PRIMARY KEY (idProduto),
+    CONSTRAINT produto_ibfk_1 FOREIGN KEY (idFornecedor) REFERENCES fornecedor (idFornecedor),
+    CONSTRAINT produto_ibfk_2 FOREIGN KEY (idCategoria)  REFERENCES categoria (idCategoria)
+);
+GO
 
--- --------------------------------------------------------
+CREATE TABLE venda (
+    idVenda       INT IDENTITY(1,1) NOT NULL,     -- Chave Primaria
+    dataVenda     DATETIME2(0)  NOT NULL,
+    ValorTotal    DECIMAL(10,2) NOT NULL,
+    idCliente     INT           NOT NULL,         -- FK de cliente
+    idFuncionario INT           NOT NULL,         -- FK de funcionario
+    CONSTRAINT PK_venda PRIMARY KEY (idVenda),
+    CONSTRAINT venda_ibfk_1 FOREIGN KEY (idCliente)     REFERENCES cliente (idCliente),
+    CONSTRAINT venda_ibfk_2 FOREIGN KEY (idFuncionario) REFERENCES funcionario (idFuncionario)
+);
+GO
 
---
--- Estrutura para tabela `cliente`
---
+CREATE TABLE item_venda (
+    idItemVenda   INT IDENTITY(1,1) NOT NULL,     -- Chave Primaria
+    Quantidade    INT           NOT NULL,
+    precoUnitario DECIMAL(10,2) NOT NULL,
+    idVenda       INT           NOT NULL,         -- FK de Venda
+    idProduto     INT           NOT NULL,         -- FK de Produto
+    CONSTRAINT PK_item_venda PRIMARY KEY (idItemVenda),
+    CONSTRAINT item_venda_ibfk_1 FOREIGN KEY (idVenda)   REFERENCES venda (idVenda),
+    CONSTRAINT item_venda_ibfk_2 FOREIGN KEY (idProduto) REFERENCES produto (idProduto)
+);
+GO
 
-CREATE TABLE `cliente` (
-  `idCliente` int(11) NOT NULL COMMENT 'Chave Primaria**',
-  `Nome` varchar(120) NOT NULL,
-  `CPF` varchar(11) NOT NULL,
-  `Telefone` varchar(20) NOT NULL,
-  `Email` varchar(120) NOT NULL,
-  `Endereco` varchar(200) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Estrutura para tabela `fornecedor`
---
-
-CREATE TABLE `fornecedor` (
-  `idFornecedor` int(11) NOT NULL COMMENT 'Chave Primaria**',
-  `Nome` varchar(120) NOT NULL,
-  `CNPJ` varchar(14) NOT NULL,
-  `Telefone` varchar(20) NOT NULL,
-  `Email` varchar(120) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Estrutura para tabela `funcionario`
---
-
-CREATE TABLE `funcionario` (
-  `idFuncionario` int(11) NOT NULL COMMENT 'Chave Primaria**',
-  `Nome` varchar(120) NOT NULL,
-  `Cargo` varchar(60) NOT NULL,
-  `Login` varchar(60) NOT NULL,
-  `Senha` varchar(255) NOT NULL,
-  `nivelPermissao` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Estrutura para tabela `item_venda`
---
-
-CREATE TABLE `item_venda` (
-  `idItemVenda` int(11) NOT NULL COMMENT 'Chave Primaria**',
-  `Quantidade` int(11) NOT NULL,
-  `precoUnitario` decimal(10,0) NOT NULL,
-  `idVenda` int(11) NOT NULL COMMENT 'FK de Venda**',
-  `idProduto` int(11) NOT NULL COMMENT 'FK de Produto**'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Estrutura para tabela `produto`
---
-
-CREATE TABLE `produto` (
-  `idProduto` int(11) NOT NULL COMMENT 'Chave Primaria**',
-  `Nome` varchar(120) NOT NULL,
-  `Preco` decimal(10,0) NOT NULL,
-  `quantidadeEstoque` int(11) NOT NULL,
-  `idFornecedor` int(11) NOT NULL COMMENT 'FK de Fornecedor**',
-  `idCategoria` int(11) NOT NULL COMMENT 'FK de Categoria**'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Estrutura para tabela `venda`
---
-
-CREATE TABLE `venda` (
-  `idVenda` int(11) NOT NULL COMMENT 'Chave Primaria**',
-  `dataVenda` datetime NOT NULL,
-  `ValorTotal` decimal(10,0) NOT NULL,
-  `idCliente` int(11) NOT NULL COMMENT 'FK de cliente**',
-  `idFuncionario` int(11) NOT NULL COMMENT 'FK de funcionario**'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Índices para tabelas despejadas
---
-
---
--- Índices de tabela `categoria`
---
-ALTER TABLE `categoria`
-  ADD PRIMARY KEY (`idCategoria`);
-
---
--- Índices de tabela `cliente`
---
-ALTER TABLE `cliente`
-  ADD PRIMARY KEY (`idCliente`);
-
---
--- Índices de tabela `fornecedor`
---
-ALTER TABLE `fornecedor`
-  ADD PRIMARY KEY (`idFornecedor`);
-
---
--- Índices de tabela `funcionario`
---
-ALTER TABLE `funcionario`
-  ADD PRIMARY KEY (`idFuncionario`);
-
---
--- Índices de tabela `item_venda`
---
-ALTER TABLE `item_venda`
-  ADD PRIMARY KEY (`idItemVenda`),
-  ADD KEY `idVenda` (`idVenda`),
-  ADD KEY `idProduto` (`idProduto`);
-
---
--- Índices de tabela `produto`
---
-ALTER TABLE `produto`
-  ADD PRIMARY KEY (`idProduto`),
-  ADD KEY `idFornecedor` (`idFornecedor`),
-  ADD KEY `idCategoria` (`idCategoria`);
-
---
--- Índices de tabela `venda`
---
-ALTER TABLE `venda`
-  ADD PRIMARY KEY (`idVenda`),
-  ADD KEY `idCliente` (`idCliente`),
-  ADD KEY `idFuncionario` (`idFuncionario`);
-
---
--- AUTO_INCREMENT para tabelas despejadas
---
-
---
--- AUTO_INCREMENT de tabela `categoria`
---
-ALTER TABLE `categoria`
-  MODIFY `idCategoria` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Chave Primaria**';
-
---
--- AUTO_INCREMENT de tabela `cliente`
---
-ALTER TABLE `cliente`
-  MODIFY `idCliente` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Chave Primaria**';
-
---
--- AUTO_INCREMENT de tabela `fornecedor`
---
-ALTER TABLE `fornecedor`
-  MODIFY `idFornecedor` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Chave Primaria**';
-
---
--- AUTO_INCREMENT de tabela `funcionario`
---
-ALTER TABLE `funcionario`
-  MODIFY `idFuncionario` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Chave Primaria**';
-
---
--- AUTO_INCREMENT de tabela `item_venda`
---
-ALTER TABLE `item_venda`
-  MODIFY `idItemVenda` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Chave Primaria**';
-
---
--- AUTO_INCREMENT de tabela `produto`
---
-ALTER TABLE `produto`
-  MODIFY `idProduto` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Chave Primaria**';
-
---
--- AUTO_INCREMENT de tabela `venda`
---
-ALTER TABLE `venda`
-  MODIFY `idVenda` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Chave Primaria**';
-
---
--- Restrições para tabelas despejadas
---
-
---
--- Restrições para tabelas `item_venda`
---
-ALTER TABLE `item_venda`
-  ADD CONSTRAINT `item_venda_ibfk_1` FOREIGN KEY (`idVenda`) REFERENCES `venda` (`idVenda`),
-  ADD CONSTRAINT `item_venda_ibfk_2` FOREIGN KEY (`idProduto`) REFERENCES `produto` (`idProduto`);
-
---
--- Restrições para tabelas `produto`
---
-ALTER TABLE `produto`
-  ADD CONSTRAINT `produto_ibfk_1` FOREIGN KEY (`idFornecedor`) REFERENCES `fornecedor` (`idFornecedor`),
-  ADD CONSTRAINT `produto_ibfk_2` FOREIGN KEY (`idCategoria`) REFERENCES `categoria` (`idCategoria`);
-
---
--- Restrições para tabelas `venda`
---
-ALTER TABLE `venda`
-  ADD CONSTRAINT `venda_ibfk_1` FOREIGN KEY (`idCliente`) REFERENCES `cliente` (`idCliente`),
-  ADD CONSTRAINT `venda_ibfk_2` FOREIGN KEY (`idFuncionario`) REFERENCES `funcionario` (`idFuncionario`);
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+CREATE INDEX idx_item_venda_idVenda     ON item_venda (idVenda);
+CREATE INDEX idx_item_venda_idProduto   ON item_venda (idProduto);
+CREATE INDEX idx_produto_idFornecedor   ON produto (idFornecedor);
+CREATE INDEX idx_produto_idCategoria    ON produto (idCategoria);
+CREATE INDEX idx_venda_idCliente        ON venda (idCliente);
+CREATE INDEX idx_venda_idFuncionario    ON venda (idFuncionario);
+GO
